@@ -9,16 +9,16 @@
                 <lightning-tab label="All Products">
                     <lightning-datatable
                         lwc:if={filteredProducts}
-                        key-field="keyField"
+                        key-field="Id"
                         data={filteredProducts}
                         columns={columnsList}
                         onrowselection={handleRowSelection}
-                        selected-rows={selectedData}>
+                        selected-rows={selectedDataIds}>
                     </lightning-datatable>
                 </lightning-tab>
                 <lightning-tab label="Selected">
                     <lightning-datatable
-                        key-field="id"
+                        key-field="Id"
                         data={selectedProducts}
                         hide-checkbox-column
                         columns={columnsList}>
@@ -27,7 +27,7 @@
                 <lightning-tab label="Existing">
                     <lightning-datatable
                         lwc:if={existingProducts.data}
-                        key-field="id"
+                        key-field="Id"
                         data={existingProducts.data}
                         hide-checkbox-column
                         columns={columnsList}>
