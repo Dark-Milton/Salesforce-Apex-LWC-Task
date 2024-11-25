@@ -45,8 +45,3 @@ $RECYCLE.BIN/
 **/.venv/
 **/venv/
 .env
-
-#next push
-**/lwc/addProductsModal/
-**/classes/AccountProductLWCController.cls
-**/classes/AccountProductLWCController.cls-meta.xml

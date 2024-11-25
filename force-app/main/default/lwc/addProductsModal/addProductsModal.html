@@ -1,0 +1,39 @@
+<template>
+    <div class="slds-m-horizontal_medium slds-m-vertical_medium">
+        <lightning-card  variant="Narrow"  title="Add Products" icon-name="standard:product">
+            <div slot="actions" class="slds-grid slds-gutters">
+                <lightning-input class="slds-col" type="text" placeholder="Search Accounts..." value={searchKey} onchange={handleSearch}></lightning-input>
+                <lightning-button class="slds-col here" variant="brand" label="Save" title="Save" onclick={handleSave}></lightning-button>
+            </div>
+            <lightning-tabset variant="scoped">
+                <lightning-tab label="All Products">
+                    <lightning-datatable
+                        lwc:if={filteredProducts}
+                        key-field="keyField"
+                        data={filteredProducts}
+                        columns={columnsList}
+                        onrowselection={handleRowSelection}
+                        selected-rows={selectedData}>
+                    </lightning-datatable>
+                </lightning-tab>
+                <lightning-tab label="Selected">
+                    <lightning-datatable
+                        key-field="id"
+                        data={selectedProducts}
+                        hide-checkbox-column
+                        columns={columnsList}>
+                    </lightning-datatable>
+                </lightning-tab>
+                <lightning-tab label="Existing">
+                    <lightning-datatable
+                        lwc:if={existingProducts.data}
+                        key-field="id"
+                        data={existingProducts.data}
+                        hide-checkbox-column
+                        columns={columnsList}>
+                    </lightning-datatable>
+                </lightning-tab>
+            </lightning-tabset>
+        </lightning-card>
+    </div>
+</template>
