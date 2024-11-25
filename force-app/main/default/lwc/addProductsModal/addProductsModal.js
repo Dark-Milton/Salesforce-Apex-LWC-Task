@@ -6,14 +6,45 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from "@salesforce/apex";
 
 const columns = [
-    { label: 'Name', fieldName: 'Name' },
-    { label: 'Product Code', fieldName: 'ProductCode' }
+    { label: 'Name', fieldName: 'Name', sortable: true },
+    { label: 'Product Code', fieldName: 'ProductCode', sortable: true }
 ]
 export default class AddProductsModal extends LightningElement {
 
     //recordId Approach
     @api recordId;
 
+
+    defaultSortDirection = 'asc';
+    sortDirection = 'asc';
+    sortedBy;
+
+    onHandleSort(event) {
+        console.log('Event Details', JSON.stringify(event.detail));
+        const { fieldName: sortedBy, sortDirection } = event.detail;
+        const cloneData = [...this.filteredProducts];
+
+        cloneData.sort(this.sortBy(sortedBy, sortDirection === 'asc' ? 1 : -1));
+        this.filteredProducts = cloneData;
+        console.log('Filtered Products', this.filteredProducts);
+        this.sortDirection = sortDirection;
+        this.sortedBy = sortedBy;
+    }
+    sortBy(field, reverse, primer) {
+        const key = primer
+            ? function (x) {
+                  return primer(x[field]);
+              }
+            : function (x) {
+                  return x[field];
+              };
+
+        return function (a, b) {
+            a = key(a);
+            b = key(b);
+            return reverse * ((a > b) - (b > a));
+        };
+    }
 
     @track products = [];
     @track filteredProducts = [];
@@ -24,10 +55,7 @@ export default class AddProductsModal extends LightningElement {
     @track selectedProducts = [];
     
 
-    columnsList = [
-        { label: 'Name', fieldName: 'Name' },
-        { label: 'Product Code', fieldName: 'ProductCode' }
-    ];
+    columnsList = columns;
 
     @wire(getProductsByAccountId, { accountId: '$recordId' })
     existingProducts

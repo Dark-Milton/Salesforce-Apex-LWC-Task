@@ -13,7 +13,10 @@
                         data={filteredProducts}
                         columns={columnsList}
                         onrowselection={handleRowSelection}
-                        selected-rows={selectedDataIds}>
+                        selected-rows={selectedDataIds}
+                        sorted-direction={sortDirection}
+                        sorted-by={sortedBy}
+                        onsort={onHandleSort}>
                     </lightning-datatable>
                 </lightning-tab>
                 <lightning-tab label="Selected">
